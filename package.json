@@ -1,0 +1,37 @@
+{
+  "name": "pert-analysis",
+  "version": "1.0.0",
+  "description": "PERT method for estimation",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production --config ./config/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikovic/pert-analysis.git"
+  },
+  "author": "Ivan Kovic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ikovic/pert-analysis/issues"
+  },
+  "homepage": "https://github.com/ikovic/pert-analysis#readme",
+  "devDependencies": {
+    "@babel/core": "^7.0.1",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.0.0",
+    "babel-loader": "^8.0.2",
+    "prettier": "^1.14.2",
+    "webpack": "^4.19.0",
+    "webpack-cli": "^3.1.0"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "printWidth": 100
+  }
+}
