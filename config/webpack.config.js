@@ -7,7 +7,14 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const ENTRY_PATH = path.resolve(__dirname, '../src/index.tsx');
 const DIST_PATH = path.resolve(__dirname, '../dist/');
+const HTML_TEMPLATE_PATH = path.resolve(__dirname, '../src/static/index.html');
 const DIST_FILENAME = 'bundle.js';
+
+const babelPlugins = [
+  ['emotion', { sourceMap: true, autoLabel: true }],
+  ObjectRestPlugin,
+  ClassPropertiesPlugin,
+];
 
 module.exports = {
   entry: ENTRY_PATH,
@@ -19,7 +26,13 @@ module.exports = {
   devServer: {
     contentBase: DIST_PATH,
   },
-  plugins: [new CleanWebpackPlugin([DIST_PATH]), new HtmlWebpackPlugin()],
+  plugins: [
+    new CleanWebpackPlugin([DIST_PATH]),
+    new HtmlWebpackPlugin({
+      title: 'Estimation Tool',
+      template: HTML_TEMPLATE_PATH,
+    }),
+  ],
   module: {
     rules: [
       {
@@ -29,7 +42,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env', '@babel/preset-typescript'],
-            plugins: [ObjectRestPlugin, ClassPropertiesPlugin],
+            plugins: babelPlugins,
           },
         },
       },
@@ -40,7 +53,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env', '@babel/preset-typescript', '@babel/preset-react'],
-            plugins: [ObjectRestPlugin, ClassPropertiesPlugin],
+            plugins: babelPlugins,
           },
         },
       },
