@@ -13,6 +13,7 @@
     // Import non-ES modules as default imports.
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "jsx": "react",
     "plugins": [
       {
