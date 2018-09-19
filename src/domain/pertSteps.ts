@@ -8,11 +8,17 @@ export enum PERT_STATES {
   RESULTS = 'results',
 }
 
+export enum PERT_START_STATES {
+  ENABLED = 'enabled',
+  DISABLED = 'disabled',
+}
+
 export enum PERT_ACTIONS {
   NEXT = 'next',
   PREVIOUS = 'previous',
   FINISH = 'finish',
   RESTART = 'restart',
+  FILL_FORM = 'fillForm',
 }
 
 const flow = {
@@ -23,15 +29,18 @@ const flow = {
       on: {
         [PERT_ACTIONS.NEXT]: PERT_STATES.OPTIMISTIC,
       },
-      initial: 'disabled',
-      key: 'landing',
+      initial: PERT_START_STATES.DISABLED,
+      key: 'Landing',
       states: {
-        disabled: {
+        [PERT_START_STATES.DISABLED]: {
           on: {
-            FILL_FORM: 'enabled',
+            [PERT_ACTIONS.FILL_FORM]: PERT_START_STATES.ENABLED,
+            [PERT_ACTIONS.NEXT]: PERT_START_STATES.DISABLED,
           },
         },
-        enabled: {},
+        [PERT_START_STATES.ENABLED]: {
+          on: {},
+        },
       },
     },
     [PERT_STATES.OPTIMISTIC]: {

@@ -8,7 +8,8 @@ describe('#PERT State Machine', () => {
   it('should correctly transition forward states', () => {
     const pertStateMachine = createStateMachine();
     const initialState = pertStateMachine.initialState;
-    const optimisticState = pertStateMachine.transition(initialState, PERT_ACTIONS.NEXT);
+    const formFilledState = pertStateMachine.transition(initialState, PERT_ACTIONS.FILL_FORM);
+    const optimisticState = pertStateMachine.transition(formFilledState, PERT_ACTIONS.NEXT);
     const nominalState = pertStateMachine.transition(optimisticState, PERT_ACTIONS.NEXT);
     const pessimisticState = pertStateMachine.transition(nominalState, PERT_ACTIONS.NEXT);
     const showResultsState = pertStateMachine.transition(pessimisticState, PERT_ACTIONS.FINISH);
@@ -37,9 +38,9 @@ describe('#PERT State Machine', () => {
       PERT_ACTIONS.PREVIOUS
     );
 
-    expect(pastNominalState.value).toBe(nominalState.value);
-    expect(pastOptimisticState.value).toBe(optimisticState.value);
-    expect(impossiblePreviousState.value).toBe(PERT_STATES.RESULTS);
+    expect(pastNominalState.value).toEqual(nominalState.value);
+    expect(pastOptimisticState.value).toEqual(optimisticState.value);
+    expect(impossiblePreviousState.value).toEqual(PERT_STATES.RESULTS);
   });
 
   it('should reset state on RESET action', () => {
@@ -58,6 +59,6 @@ describe('#PERT State Machine', () => {
     const impossibleState = pertStateMachine.transition(optimisticState, PERT_ACTIONS.FINISH);
 
     expect(impossibleState.value).not.toBe(PERT_STATES.RESULTS);
-    expect(impossibleState.value).toBe(PERT_STATES.OPTIMISTIC);
+    expect(impossibleState.value).toEqual(initialState.value);
   });
 });
