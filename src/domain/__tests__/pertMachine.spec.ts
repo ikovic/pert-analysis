@@ -1,4 +1,4 @@
-import { createStateMachine, PERT_STATES, PERT_ACTIONS } from '../pertSteps';
+import { createStateMachine, PERT_STATES, PERT_ACTIONS } from '../pertMachine';
 
 /**
  * Tests here are a bit overzealous. They also prove that xstate is working correctly,
@@ -8,8 +8,7 @@ describe('#PERT State Machine', () => {
   it('should correctly transition forward states', () => {
     const pertStateMachine = createStateMachine();
     const initialState = pertStateMachine.initialState;
-    const formFilledState = pertStateMachine.transition(initialState, PERT_ACTIONS.FILL_FORM);
-    const optimisticState = pertStateMachine.transition(formFilledState, PERT_ACTIONS.NEXT);
+    const optimisticState = pertStateMachine.transition(initialState, PERT_ACTIONS.NEXT);
     const nominalState = pertStateMachine.transition(optimisticState, PERT_ACTIONS.NEXT);
     const pessimisticState = pertStateMachine.transition(nominalState, PERT_ACTIONS.NEXT);
     const showResultsState = pertStateMachine.transition(pessimisticState, PERT_ACTIONS.FINISH);
@@ -59,6 +58,6 @@ describe('#PERT State Machine', () => {
     const impossibleState = pertStateMachine.transition(optimisticState, PERT_ACTIONS.FINISH);
 
     expect(impossibleState.value).not.toBe(PERT_STATES.RESULTS);
-    expect(impossibleState.value).toEqual(initialState.value);
+    expect(impossibleState.value).toEqual(optimisticState.value);
   });
 });

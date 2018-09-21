@@ -1,4 +1,5 @@
 import { Machine } from 'xstate';
+import { StandardMachine } from 'xstate/lib/types';
 
 export enum PERT_STATES {
   START = 'start',
@@ -6,11 +7,6 @@ export enum PERT_STATES {
   NOMINAL = 'nominal',
   PESSIMISTIC = 'pessimistic',
   RESULTS = 'results',
-}
-
-export enum PERT_START_STATES {
-  ENABLED = 'enabled',
-  DISABLED = 'disabled',
 }
 
 export enum PERT_ACTIONS {
@@ -21,26 +17,13 @@ export enum PERT_ACTIONS {
   FILL_FORM = 'fillForm',
 }
 
-const flow = {
+const machine = {
   initial: PERT_STATES.START,
   key: 'Pert',
   states: {
     [PERT_STATES.START]: {
       on: {
         [PERT_ACTIONS.NEXT]: PERT_STATES.OPTIMISTIC,
-      },
-      initial: PERT_START_STATES.DISABLED,
-      key: 'Landing',
-      states: {
-        [PERT_START_STATES.DISABLED]: {
-          on: {
-            [PERT_ACTIONS.FILL_FORM]: PERT_START_STATES.ENABLED,
-            [PERT_ACTIONS.NEXT]: PERT_START_STATES.DISABLED,
-          },
-        },
-        [PERT_START_STATES.ENABLED]: {
-          on: {},
-        },
       },
     },
     [PERT_STATES.OPTIMISTIC]: {
@@ -68,4 +51,4 @@ const flow = {
   },
 };
 
-export const createStateMachine = () => Machine(flow);
+export const createStateMachine = () => Machine(machine);
